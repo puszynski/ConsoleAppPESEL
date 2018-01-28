@@ -1,0 +1,7 @@
+C:\Users\puszy\OneDrive\Dokumenty\C#\ConsoleAppPESEL\ConsoleAppPESEL\bin\Debug\ConsoleAppPESEL.exe.config
+C:\Users\puszy\OneDrive\Dokumenty\C#\ConsoleAppPESEL\ConsoleAppPESEL\bin\Debug\ConsoleAppPESEL.exe
+C:\Users\puszy\OneDrive\Dokumenty\C#\ConsoleAppPESEL\ConsoleAppPESEL\bin\Debug\ConsoleAppPESEL.pdb
+C:\Users\puszy\OneDrive\Dokumenty\C#\ConsoleAppPESEL\ConsoleAppPESEL\obj\Debug\ConsoleAppPESEL.csprojResolveAssemblyReference.cache
+C:\Users\puszy\OneDrive\Dokumenty\C#\ConsoleAppPESEL\ConsoleAppPESEL\obj\Debug\ConsoleAppPESEL.csproj.CoreCompileInputs.cache
+C:\Users\puszy\OneDrive\Dokumenty\C#\ConsoleAppPESEL\ConsoleAppPESEL\obj\Debug\ConsoleAppPESEL.exe
+C:\Users\puszy\OneDrive\Dokumenty\C#\ConsoleAppPESEL\ConsoleAppPESEL\obj\Debug\ConsoleAppPESEL.pdb
