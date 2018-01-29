@@ -11,86 +11,205 @@ namespace ConsoleAppPESEL
         static void Main(string[] args)
         {
             //using function to validate pesel + getting data from other methods
-            Validate.ValidatePESEL(Person.GetDataOfBrith(), Person.GetPESEL(), Person.GetSex());
-            Console.ReadKey();
+            //Validate.ValidatePESEL(Person.GetDataOfBrith(), Person.GetPESEL(), Person.GetSex());
+            
+            //creating new object
+            Person2 P1 = new Person2();
 
-                ///notatki własne
-                //Person.GetDataOfBrith();		//if static
-
-                //var instance = new NoStaticClass();	//if non static method, must be instanced first;
-                //instance.InstanceMethod();
-        }
-    }
-
-
-    public class Person
-    {   //get date (without checking input)
-        public static string GetDataOfBrith()
-        {            
-
+            //getting data
             Console.WriteLine("Podaj rok urodzenia:");
-            string yearOfBirth = Console.ReadLine();  //1987
+            P1.YearOfBrith = Console.ReadLine();
 
             Console.WriteLine("Podaj miesiąc urodzenia(01-12):");
-            string monthOfBirth = Console.ReadLine(); //01
+            P1.MonthOfBrith = Console.ReadLine(); 
 
             Console.WriteLine("Podaj dzień urodzenia(01-31):");
-            string dayOfBirth = Console.ReadLine(); //27
-
-            string fullDate = yearOfBirth + monthOfBirth + dayOfBirth;
-                Console.WriteLine("     Kontrolny kod daty :{0}", fullDate);  //control
-            return fullDate;
-        }
-
-        
-        //get PESEL + input check
-        public static string GetPESEL()
-        {
-            Start:
-
-            Console.WriteLine("Podaj PESEL:");
-            string value;
-            value = Console.ReadLine();      //87012700252
-            if (value.Length == 11) return value;            
-            else
-            {
-                Console.WriteLine("Niepoprawna długość PESEL - wpisz ponownie: ");
-                goto Start; 
-            }
-        }
-
-        //get sec + input check
-        public static string GetSex()
-        {
-            Start:
+            P1.DayOfBrith = Console.ReadLine();
 
             Console.WriteLine("Podaj płeć (M lub K):");
-            string value = Console.ReadLine();
+            P1.Sex = Console.ReadLine();
 
-            //checking string value
-            if ((value == "M")||(value == "K")) return value;  
-            else if (value=="m")
-            {
-                value = "M";
-                return value;
-            }
-            else if (value == "k")
-            {
-                value = "K";
-                return value;
-            }
+            Console.WriteLine("Podaj PESEL:");
+            P1.PESEL = Console.ReadLine();
 
-            else
-            {
-                Console.WriteLine("Niepoprawny symbol płci - użyj M lub K: ");
-                goto Start;
-            }
+            //printing
+            P1.Print();
+            Console.WriteLine(P1.PrintDateForValidate());
 
+            //validate
+            Validate.ValidatePESEL(P1.PrintDateForValidate(), P1.PESEL, P1.Sex);
+
+
+            Console.ReadKey();
         }
     }
 
 
 
+
+    interface IPerson2
+    {
+        string PrintDateForValidate();
+        void Print();
+    }
+
+
+
+
+    public class Person2 : IPerson2
+    {   
+        // Creating data fields
+        private string _yearOfBirth;
+        string _monthOfBirth;
+        string _dayOfBirth;
+        string _sex;
+        string _pesel;
+
+
+        #region get/set properties
+        // Access fields using properties
+        public string YearOfBrith
+        {
+            set
+            {
+                if (value.Length != 4) { throw new Exception("Rok musi składać się z 4 cyfr, np. 1987."); }
+                else this._yearOfBirth = value;
+            }
+            get { return this._yearOfBirth; }
+        }
+
+        public string MonthOfBrith
+        {
+            set
+            {
+                if (value.Length != 2) { throw new Exception("Miesiąc musi składać się z 2 cyfr, np. 01, 06, 11."); }
+                else this._monthOfBirth = value;
+            }
+            get { return this._monthOfBirth; }
+        }
+
+        public string DayOfBrith
+        {
+            set
+            {
+                if (value.Length != 2) { throw new Exception("Dzień musi składać się z 2 cyfr, np. 01, 16, 27."); }
+                else this._dayOfBirth = value;
+            }
+            get { return this._dayOfBirth; }
+        }
+
+        public string Sex
+        {
+            set
+            {
+                if (value.Length != 1 && ( (value == "M") || (value == "K") )) { throw new Exception("Płeć musi zostać przedstawiona za pomocą litery M dla mężczyzny lub K dla kobiety."); }
+                else this._sex = value;
+            }
+            get { return this._sex; }
+        }
+
+        public string PESEL
+        {
+            set
+            {
+                if (value.Length != 11) { throw new Exception("PESEL musi składać się z 11 cyfr, np. 87012700252"); }
+                else this._pesel = value;
+            }
+            get { return this._pesel; }
+        }
+        #endregion
+
+
+
+        /// using constructr vs get/set properties?
+        //public Person2(string YearOfBirth, string MonthOfBirth, string DayOfBirth, string Sex, string Pesel)
+        //{}
+
+        
+       
+        public string PrintDateForValidate()
+        {
+            return _yearOfBirth + _monthOfBirth + _dayOfBirth;            
+        }
+
+        public void Print()
+        {
+            Console.WriteLine($"Received data: {_yearOfBirth}.{_monthOfBirth}.{_dayOfBirth}, sex: {_sex}, PESEL: {_pesel}");
+        }
+    }
+
+    
+    /// <summary>
+    /// old class used in static class
+    /// </summary>
+    //    public class Person
+    //{   //get date (without checking input)
+    //    public static string GetDataOfBrith()
+    //    {            
+
+    //        Console.WriteLine("Podaj rok urodzenia:");
+    //        string yearOfBirth = Console.ReadLine();  //1987
+
+    //        Console.WriteLine("Podaj miesiąc urodzenia(01-12):");
+    //        string monthOfBirth = Console.ReadLine(); //01
+
+    //        Console.WriteLine("Podaj dzień urodzenia(01-31):");
+    //        string dayOfBirth = Console.ReadLine(); //27
+
+    //        string fullDate = yearOfBirth + monthOfBirth + dayOfBirth;
+    //            Console.WriteLine("     Kontrolny kod daty :{0}", fullDate);  //control
+    //        return fullDate;
+    //    }
+
+        
+    //    //get PESEL + input check
+    //    public static string GetPESEL()
+    //    {
+    //        Start:
+
+    //        Console.WriteLine("Podaj PESEL:");
+    //        string value;
+    //        value = Console.ReadLine();      //87012700252
+    //        if (value.Length == 11) return value;            
+    //        else
+    //        {
+    //            Console.WriteLine("Niepoprawna długość PESEL - wpisz ponownie: ");
+    //            goto Start; 
+    //        }
+    //    }
+
+    //    //get sec + input check
+    //    public static string GetSex()
+    //    {
+    //        Start:
+
+    //        Console.WriteLine("Podaj płeć (M lub K):");
+    //        string value = Console.ReadLine();
+
+    //        //checking string value
+    //        if ((value == "M")||(value == "K")) return value;  
+    //        else if (value=="m")
+    //        {
+    //            value = "M";
+    //            return value;
+    //        }
+    //        else if (value == "k")
+    //        {
+    //            value = "K";
+    //            return value;
+    //        }
+
+    //        else
+    //        {
+    //            Console.WriteLine("Niepoprawny symbol płci - użyj M lub K: ");
+    //            goto Start;
+    //        }
+
+    //    }
+    //}
+
+
+    
 
     public class Validate
     {
@@ -150,16 +269,7 @@ namespace ConsoleAppPESEL
     }
 
 
-    ///notatki własne
-    /*
-    public class NoStaticClass
-    {
-        public void InstanceMethod()
-        {
-            //..        
-        }
-    }
-    */
+   
 
 
 }
